@@ -24,6 +24,6 @@ class Hero {
 let hercule:Hero = new Hero("hercule", 19, 300)
 let johnsson:Hero = new Hero("johnsson", 19, 200)
 
-
+ 
 hercule.attack(johnsson)
 johnsson.attack(hercule)
