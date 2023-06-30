@@ -31,6 +31,10 @@ export class Hero {
         } else {
             opponent.life -= this.power;
         }
+
+        console.log(`${this.name} attaque ${opponent.getname()}`);
+        console.log(`${opponent.name} perd ${this.power}`);
+        console.log(`La vie de ${opponent.name} est maintenant de ${opponent.life}`);
     }
 
     isAlive(): boolean {
@@ -113,7 +117,7 @@ class HeroAxe extends Hero {
 
 
 let hercule = new HeroSword("hercule", 1250, 10000);
-let johnsson = new Hero("johnsson", 5000, 10000);
+let johnsson = new HeroSpear("johnsson", 500, 10000);
 let i = 1;
 
 while (hercule.isAlive() && johnsson.isAlive()) {
