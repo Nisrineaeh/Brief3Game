@@ -35,6 +35,9 @@ export class Hero {
         console.log(`${this.name} attaque ${opponent.getname()}`);
         console.log(`${opponent.name} perd ${this.power}`);
         console.log(`La vie de ${opponent.name} est maintenant de ${opponent.life}`);
+        console.log(`${opponent.name} attaque ${this.name}`);
+        console.log(`${this.name} perd ${opponent.power}`);
+        console.log(`La vie de ${this.name} est maintenant de ${this.life}`);
     }
 
     isAlive(): boolean {
