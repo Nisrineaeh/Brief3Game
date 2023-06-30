@@ -19,29 +19,30 @@ class Hero {
        return this.life > 0;
     }
 
-    getname(): string {
+    get _name(): string {
         return this.name
     }
 
-    setname(nouveauNom : string) {
+    set _name(nouveauNom : string) {
         this.name = nouveauNom;
     }
     
-    getpower(): number {
+    get _power(): number {
         return this.power
     }
 
-    setpower(nouveauPower : string) {
+    set _power(nouveauPower : string) {
         this.name = nouveauPower;
     }
     
-    getlife(): number {
+    get _life(): number {
         return this.life
     }
-    setlife(nouvelleLife : number) {
+    set _life(nouvelleLife : number) {
         this.life = nouvelleLife;
     }
 }
+
 
 let hercule:Hero = new Hero("hercule", 19, 300)
 let johnsson:Hero = new Hero("johnsson", 19, 200)
@@ -50,4 +51,11 @@ let johnsson:Hero = new Hero("johnsson", 19, 200)
 hercule.attack(johnsson)
 johnsson.attack(hercule)
 
+class Weapon{
+    name:string;
+
+    constructor(wname: string){
+        this.name = wname;
+    }
 }
+

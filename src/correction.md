@@ -114,3 +114,148 @@ console.log(
 
 // N'oubliez pas que vous êtes au top !!! 🔥🔥🔥
 ```
+
+correction boss 
+```typescript
+class Hero {
+  private name: string;
+  private power: number;
+  private life: number;
+
+  constructor(_name: string, _power: number, _life: number) {
+    this.name = _name;
+    this.power = _power;
+    this.life = _life;
+  }
+
+  attack(opponent: Hero) {
+    opponent.reduceLife(this.power);
+  }
+
+  isAlive(): boolean {
+    return this.life > 0;
+  }
+
+  private reduceLife(damage: number) {
+    this.life -= damage;
+    if (this.life < 0) {
+      this.life = 0;
+    }
+  }
+
+  get _name(): string {
+    return this.name;
+  }
+
+  get _power(): number {
+    return this.power;
+  }
+
+  get _life(): number {
+    return this.life;
+  }
+
+  set _power(power: number) {
+    this.power = power;
+  }
+
+  set _life(life: number) {
+    this.life = life;
+  }
+}
+
+class Weapon {
+  private name: string;
+
+  constructor(name: string) {
+    this.name = name;
+  }
+
+  get _name(): string {
+    return this.name;
+  }
+}
+
+class HeroAxe extends Hero {
+  constructor(name: string, power: number, life: number) {
+    super(name, power, life);
+    this.weapon = new Weapon("axe");
+  }
+
+  attack(opponent: Hero) {
+    if (opponent instanceof HeroSword) {
+      this.setPower(this.getPower() * 2);
+    }
+    super.attack(opponent);
+    this.setPower(this.getPower() / 2);
+  }
+}
+
+class HeroSword extends Hero {
+  constructor(name: string, power: number, life: number) {
+    super(name, power, life);
+    this.weapon = new Weapon("sword");
+  }
+
+  attack(opponent: Hero) {
+    if (opponent instanceof HeroSpear) {
+      this.setPower(this.getPower() * 2);
+    }
+    super.attack(opponent);
+    this.setPower(this.getPower() / 2);
+  }
+}
+
+class HeroSpear extends Hero {
+  constructor(name: string, power: number, life: number) {
+    super(name, power, life);
+    this.weapon = new Weapon("spear");
+  }
+
+  attack(opponent: Hero) {
+    if (opponent instanceof HeroAxe) {
+      this.setPower(this.getPower() * 2);
+    }
+    super.attack(opponent);
+    this.setPower(this.getPower() / 2);
+  }
+}
+
+// Partie 1 : Héros
+
+const joan: Hero = new Hero("Joan", 10, 100);
+const leon: Hero = new Hero("Leon", 8, 80);
+
+joan.attack(leon);
+console.log(leon.getLife()); // Output: 90
+console.log(leon.isAlive()); // Output: true
+
+// Partie 2 : Armes
+
+const joanAxe: HeroAxe = new HeroAxe("Joan (Axe)", 10, 100);
+const leonSword: HeroSword = new HeroSword("Leon (Sword)", 8, 80);
+const marcusSpear: HeroSpear = new HeroSpear("Marcus (Spear)", 12, 90);
+
+joanAxe.attack(leonSword);
+leonSword.attack(marcusSpear);
+marcusSpear.attack(joanAxe);
+
+console.log(joanAxe.getPower()); // Output: 10
+console.log(leonSword.getPower()); // Output: 8
+console.log(marcusSpear.getPower()); // Output: 12
+
+// Partie 3 : Bataille
+
+while (joanAxe.isAlive() && leonSword.isAlive()) {
+  joanAxe.attack(leonSword);
+  leonSword.attack(joanAxe);
+}
+
+if (!joanAxe.isAlive() && !leonSword.isAlive()) {
+  console.log("It's a draw.");
+} else if (joanAxe.isAlive()) {
+  console.log(joanAxe.getName() + " wins.");
+} else {
+  console.log(leonSword.getName() + " wins.");
+}
+```
