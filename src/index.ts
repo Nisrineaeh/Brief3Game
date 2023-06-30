@@ -1,22 +1,28 @@
+import { HeroAxe } from "./HeroAxe";
+import { HeroSpear } from "./HeroSpear";
+import { HeroSword } from "./HeroSword";
+
 export class Hero {
     private name:string;
     private power:number;
     private life:number;
-            weapon!:Weapon;
+            weapon?:Weapon;
 
-    constructor(_name:string, _power:number, _life:number) {
-      
+    constructor(_name:string, _power:number, _life:number) {   
         this.name = _name;
         this.power = _power;
         this.life = _life;
-
     }
 
-    attack(opponent:Hero){
-        opponent.life -= this.power;   
+    attack(opponent:Hero): void{
+        if(this.weapon){
+        opponent.life -= this.power + this.weapon.damage;   
+    }else{
+        opponent.life -= this.power;
+    }
     }
     
-    isAlive(){
+    isAlive(): boolean{
        return this.life > 0;
     }
 
@@ -39,101 +45,42 @@ export class Hero {
     getlife(): number {
         return this.life
     }
-    setlife(nouvelleLife : number) {
+    setlife(nouvelleLife : number):void {
         this.life = nouvelleLife;
     }
 }
-
-
-let hercule:Hero = new Hero("hercule", 19, 300)
-let johnsson:Hero = new Hero("johnsson", 19, 200)
-
- 
-hercule.attack(johnsson)
-johnsson.attack(hercule)
-
-
-
-
-
-
 
 
 
 
 export class Weapon{
     name:string;
+    damage:number;
 
-    constructor(wname: string){
-        this.name = wname;
+    constructor(_name: string, _damage:number){
+        this.name = _name;
+        this.damage = _damage;
     }
+
 }
 
+let hercule: Hero = new Hero("hercule", 1250, 10000)
+let johnsson: Hero = new Hero("johnsson", 5000, 10000)
+let i=1;
 
+while (hercule.isAlive() && johnsson.isAlive()) {
+    hercule.attack(johnsson);
+    johnsson.attack(hercule);
+    console.log("round",i);
+    console.log("La vie de johnsson :" , johnsson.getlife())
+    console.log("La vie de hercule :", hercule.getlife())
+    i++;
+}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// Partie 1 : Héros
-
-// const joan: Hero = new Hero("Joan", 10, 100);
-// const leon: Hero = new Hero("Leon", 8, 80);
-
-// joan.attack(leon);
-// console.log(leon.getLife()); // Output: 90
-// console.log(leon.isAlive()); // Output: true
-
-// // Partie 2 : Armes
-
-// const joanAxe: HeroAxe = new HeroAxe("Joan (Axe)", 10, 100);
-// const leonSword: HeroSword = new HeroSword("Leon (Sword)", 8, 80);
-// const marcusSpear: HeroSpear = new HeroSpear("Marcus (Spear)", 12, 90);
-
-// joanAxe.attack(leonSword);
-// leonSword.attack(marcusSpear);
-// marcusSpear.attack(joanAxe);
-
-// console.log(joanAxe.getPower()); // Output: 10
-// console.log(leonSword.getPower()); // Output: 8
-// console.log(marcusSpear.getPower()); // Output: 12
-
-// // Partie 3 : Bataille
-
-// while (joanAxe.isAlive() && leonSword.isAlive()) {
-//     joanAxe.attack(leonSword);
-//     leonSword.attack(joanAxe);
-// }
-
-// if (!joanAxe.isAlive() && !leonSword.isAlive()) {
-//     console.log("It's a draw.");
-// } else if (joanAxe.isAlive()) {
-//     console.log(joanAxe.getName() + " wins.");
-// } else {
-//     console.log(leonSword.getName() + " wins.");
-// }
+if (!hercule.isAlive() && !johnsson.isAlive()){
+    console.log(`exequo`); 
+} else if (johnsson.isAlive()) {
+    console.log(`${johnsson.getname()} + à gagner`);
+} else {
+    console.log(`${hercule.getname()} + à gagner`);
+}
